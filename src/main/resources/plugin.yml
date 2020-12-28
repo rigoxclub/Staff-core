@@ -1,0 +1,7 @@
+name: StaffCore
+version: ${project.version}
+main: club.rigox.staffcore.StaffCore
+api-version: 1.16
+authors: [ sebastn_chan ]
+description: Staff system for Vanilla
+website: https://rigox.club
