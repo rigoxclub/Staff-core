@@ -9,12 +9,5 @@ public final class StaffCore extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-
-        registerCommands();
     }
-
-    public void registerCommands() {
-        PaperCommandManager manager = new PaperCommandManager(this);
-    }
-
 }
