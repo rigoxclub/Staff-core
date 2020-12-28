@@ -1,17 +1,30 @@
 package club.rigox.staffcore;
 
+import club.rigox.staffcore.utils.PlayerModel;
+import co.aikar.commands.PaperCommandManager;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public final class StaffCore extends JavaPlugin {
+    public static StaffCore instance;
+
+    private Map<Player, PlayerModel> playerModelMap = new LinkedHashMap<>();
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
+        instance = this;
 
+        registerCommands();
     }
 
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
+    public void registerCommands() {
+        PaperCommandManager manager = new PaperCommandManager(this);
+    }
+
+    public Map<Player, PlayerModel> getModel() {
+        return playerModelMap;
     }
 }
