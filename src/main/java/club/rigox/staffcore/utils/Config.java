@@ -38,9 +38,17 @@ public class Config {
 
     public static String getLangString(String path) {
         if (StaffCore.instance.getLang().getString(path) == null) {
-            error(String.format("The folowing path doesn't exists on Lang.yml! %s, please add it.", path));
+            error(String.format("The following path doesn't exists on Lang.yml! %s, please add it.", path));
             return "&cPlease inform this error to an administrator and let it know to review the console.";
         }
         return StaffCore.instance.getLang().getString(Objects.requireNonNull(path));
+    }
+
+    public static String getDBString(String path) {
+        if (StaffCore.instance.getDatabase().getString(path) == null) {
+            error(String.format("The following path doesn't exists on Database.yml! %s, please add it.", path));
+            return "&cPlease inform this error to an administrator and let it know to review the console.";
+        }
+        return StaffCore.instance.getDatabase().getString(Objects.requireNonNull(path));
     }
 }
