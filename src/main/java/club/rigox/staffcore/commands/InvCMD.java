@@ -23,18 +23,16 @@ public class InvCMD extends BaseCommand {
     @CommandCompletion("@players")
     @Syntax("<player>")
     public void onSave(CommandSender sender, Player player) {
-        plugin.getInventoryUtil().saveInventory(player);
-//        plugin.getAttributes().saveAttributes(player);
+//        plugin.getInventoryUtil().saveInventory(player);
         player.getInventory().clear();
-        saveAttributes(player);
+        plugin.getPlayerUtils().saveAttributes(player);
     }
 
     @Subcommand("restore")
     @CommandCompletion("@players")
     @Syntax("<player>")
     public void onRestore(CommandSender sender, Player player) throws IOException {
-        plugin.getInventoryUtil().restoreInventory(player);
-//        plugin.getAttributes().restoreAttributes(player);
-        restoreAttributes(player);
+//        plugin.getInventoryUtil().restoreInventory(player);
+        plugin.getPlayerUtils().restoreAttributes(player);
     }
 }

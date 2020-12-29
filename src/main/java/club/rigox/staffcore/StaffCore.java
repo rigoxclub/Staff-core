@@ -32,12 +32,14 @@ public final class StaffCore extends JavaPlugin {
         instance = this;
 
         mongo = new MongoDB();
+        playerUtils = new PlayerUtils(this);
         inventorySerializer = new InventorySerializer(this);
 
         loadConfiguration();
-        mongo.connect();
         registerCommands();
-        new PlayerListener(this);
+        registerListeners();
+
+        mongo.connect();
     }
 
     @Override
@@ -55,6 +57,10 @@ public final class StaffCore extends JavaPlugin {
         PaperCommandManager manager = new PaperCommandManager(this);
         manager.enableUnstableAPI("brigadier");
         manager.registerCommand(new InvCMD(this));
+    }
+
+    public void registerListeners() {
+        new PlayerListener(this);
     }
 
     public FileConfiguration getLang() {
