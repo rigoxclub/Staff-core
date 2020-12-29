@@ -23,8 +23,7 @@ public final class StaffCore extends JavaPlugin {
     private FileConfiguration lang;
     private FileConfiguration database;
 
-    private Attributes attributesUtil;
-    private Map<Player, Attributes> attributesMap = new LinkedHashMap<>();
+    private final Map<Player, Attributes> attributesMap = new LinkedHashMap<>();
 
     @Override
     public void onEnable() {
@@ -72,9 +71,6 @@ public final class StaffCore extends JavaPlugin {
         return inventorySerializer;
     }
 
-    public Attributes getAttributes() {
-        return attributesUtil;
-    }
     public Map<Player, Attributes> getAttributesMap() {
         return attributesMap;
     }
