@@ -72,28 +72,8 @@ public class InventoryUtil {
         }
     }
 
-    public static Inventory fromBase64(String data) throws IOException {
+    public ItemStack[] itemStackArrayFromBase64(String data) throws IOException {
         try {
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
-            BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
-            Inventory inventory = Bukkit.getServer().createInventory(null, dataInput.readInt());
-
-            // Read the serialized inventory
-            for (int i = 0; i < inventory.getSize(); i++) {
-                inventory.setItem(i, (ItemStack) dataInput.readObject());
-            }
-
-            dataInput.close();
-            return inventory;
-        } catch (ClassNotFoundException e) {
-            throw new IOException("Unable to decode class type.", e);
-        }
-    }
-
-    public ItemStack[] itemStackArrayFromBase64(UUID uuid) throws IOException {
-        try {
-            String data = plugin.getMongo().getInventoryArmorDatabase(uuid);
-
             ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
             BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
             ItemStack[] items = new ItemStack[dataInput.readInt()];
