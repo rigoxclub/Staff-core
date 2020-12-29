@@ -1,15 +1,20 @@
 package club.rigox.staffcore.database;
 
 import com.mongodb.*;
-import org.bukkit.inventory.Inventory;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.util.UUID;
 
 import static club.rigox.staffcore.utils.Config.getDBString;
 import static club.rigox.staffcore.utils.Logger.*;
+import static com.mongodb.client.model.Filters.*;
+import static com.mongodb.client.model.Updates.*;
 
 public class MongoDB {
-    private DBCollection playerCollection;
+    private MongoCollection<Document> playerCollection;
     private MongoClient client;
 
     public void connect(){
@@ -21,8 +26,9 @@ public class MongoDB {
         client = new MongoClient(uri);
 
         String databaseString = getDBString("MONGO.DATABASE");
-        DB database = client.getDB(databaseString);
+        MongoDatabase database = client.getDatabase(databaseString);
         playerCollection = database.getCollection("players");
+
     }
 
     public void close() {
@@ -30,46 +36,28 @@ public class MongoDB {
         info("MongoDB connection has been closed!");
     }
 
-//    public String[] getDatabaseInventory(UUID uuid) {
+    public void storeInventoryToDatabase(UUID uuid, String inventory, String armor) {
+        Document document = new Document("UUID", uuid.toString())
+                .append("inventory", new Document("contents", inventory)
+                        .append("armor", armor));
+
+        playerCollection.insertOne(document);
+
+    }
+
+
+    public void updateInventoryDatabase(UUID uuid, String inventory, String armor) {
 //        DBObject r = new BasicDBObject("UUID", uuid.toString());
 //        DBObject found = playerCollection.findOne(r);
 //
 //        if (found == null) {
-//            error("Player is not on the database");
-//            return null;
+//            debug("Player has been added to the database while being checked.");
+//            storeInventoryToDatabase(uuid, inventory, armor);
+//            return;
 //        }
 //
-//        return (String[]) found.get("inventory");
-//    }
 
-
-    public void storeInventoryToDatabase(UUID uuid, String inventory, String armor) {
-        DBObject object = new BasicDBObject("UUID", uuid.toString());
-
-        object.put("inventory", inventory);
-        object.put("armor", armor);
-        playerCollection.insert(object);
+        playerCollection.updateOne(eq("UUID", new ObjectId(uuid.toString())),
+                combine(set("inventory.contents", "vamoo"), set("inventory.armor", "vamooo")));
     }
-
-    public void updateInventoryDatabase(UUID uuid, String inventory, String armor) {
-        DBObject r = new BasicDBObject("UUID", uuid.toString());
-        DBObject found = playerCollection.findOne(r);
-
-        if (found == null) {
-            debug("Player has been added to the database while being checked.");
-            storeInventoryToDatabase(uuid, inventory, armor);
-            return;
-        }
-
-        BasicDBObject set1 = new BasicDBObject("$set", r);
-
-        set1.append("$set", new BasicDBObject("inventory", "alo"));
-        playerCollection.update(found, set1);
-
-        BasicDBObject set = new BasicDBObject("$set", r);
-
-        set.append("$set", new BasicDBObject("armor", "eeeeee"));
-        playerCollection.update(found, set);
-    }
-
 }
