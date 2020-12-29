@@ -1,7 +1,7 @@
 package club.rigox.staffcore.listeners;
 
 import club.rigox.staffcore.StaffCore;
-import club.rigox.staffcore.player.AttributesUtil;
+import club.rigox.staffcore.player.Attributes;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,6 +19,6 @@ public class PlayerListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
 
-        plugin.getAttributesMap().put(player, new AttributesUtil(plugin));
+        plugin.getAttributesMap().put(player, new Attributes(plugin));
     }
 }

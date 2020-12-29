@@ -13,10 +13,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
-public class InventoryUtil {
+public class InventorySerializer {
     private final StaffCore plugin;
 
-    public InventoryUtil (StaffCore plugin) {
+    public InventorySerializer(StaffCore plugin) {
         this.plugin = plugin;
     }
 

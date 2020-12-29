@@ -3,8 +3,8 @@ package club.rigox.staffcore;
 import club.rigox.staffcore.commands.InvCMD;
 import club.rigox.staffcore.database.MongoDB;
 import club.rigox.staffcore.listeners.PlayerListener;
-import club.rigox.staffcore.player.AttributesUtil;
-import club.rigox.staffcore.player.InventoryUtil;
+import club.rigox.staffcore.player.Attributes;
+import club.rigox.staffcore.player.InventorySerializer;
 import club.rigox.staffcore.utils.Config;
 import co.aikar.commands.PaperCommandManager;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -18,20 +18,20 @@ public final class StaffCore extends JavaPlugin {
     public static StaffCore instance;
 
     private MongoDB mongo;
-    private InventoryUtil inventoryUtil;
+    private InventorySerializer inventorySerializer;
 
     private FileConfiguration lang;
     private FileConfiguration database;
 
-    private AttributesUtil attributesUtil;
-    private Map<Player, AttributesUtil> attributesMap = new LinkedHashMap<>();
+    private Attributes attributesUtil;
+    private Map<Player, Attributes> attributesMap = new LinkedHashMap<>();
 
     @Override
     public void onEnable() {
         instance = this;
 
         mongo = new MongoDB();
-        inventoryUtil = new InventoryUtil(this);
+        inventorySerializer = new InventorySerializer(this);
 
         loadConfiguration();
         mongo.connect();
@@ -68,14 +68,14 @@ public final class StaffCore extends JavaPlugin {
         return mongo;
     }
 
-    public InventoryUtil getInventoryUtil() {
-        return inventoryUtil;
+    public InventorySerializer getInventoryUtil() {
+        return inventorySerializer;
     }
 
-    public AttributesUtil getAttributes() {
+    public Attributes getAttributes() {
         return attributesUtil;
     }
-    public Map<Player, AttributesUtil> getAttributesMap() {
+    public Map<Player, Attributes> getAttributesMap() {
         return attributesMap;
     }
 }

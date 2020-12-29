@@ -3,7 +3,7 @@ package club.rigox.staffcore.player;
 import club.rigox.staffcore.StaffCore;
 import org.bukkit.entity.Player;
 
-public class AttributesUtil {
+public class Attributes {
     private final StaffCore plugin;
 
     private double health;
@@ -13,7 +13,7 @@ public class AttributesUtil {
     private int experienceLevel;
     private int food;
 
-    public AttributesUtil (StaffCore plugin) {
+    public Attributes(StaffCore plugin) {
         this.plugin = plugin;
     }
 
