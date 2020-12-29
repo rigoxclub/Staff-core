@@ -90,8 +90,10 @@ public class InventoryUtil {
         }
     }
 
-    public static ItemStack[] itemStackArrayFromBase64(String data) throws IOException {
+    public ItemStack[] itemStackArrayFromBase64(UUID uuid) throws IOException {
         try {
+            String data = plugin.getMongo().getInventoryArmorDatabase(uuid);
+
             ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
             BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
             ItemStack[] items = new ItemStack[dataInput.readInt()];
