@@ -7,11 +7,8 @@ import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
-
-import static club.rigox.staffcore.utils.Logger.debug;
 
 @CommandAlias("inventory")
 public class InvCMD extends BaseCommand {

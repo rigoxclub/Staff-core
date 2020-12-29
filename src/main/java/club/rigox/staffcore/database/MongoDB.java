@@ -7,7 +7,6 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
 import java.util.UUID;
-import java.util.function.Consumer;
 
 import static club.rigox.staffcore.utils.Config.getDBString;
 import static club.rigox.staffcore.utils.Logger.*;
