@@ -7,10 +7,10 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
 import java.util.UUID;
+import java.util.function.Consumer;
 
 import static club.rigox.staffcore.utils.Config.getDBString;
-import static club.rigox.staffcore.utils.Logger.debug;
-import static club.rigox.staffcore.utils.Logger.info;
+import static club.rigox.staffcore.utils.Logger.*;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
@@ -50,7 +50,6 @@ public class MongoDB {
     public void updateInventoryDatabase(UUID uuid, String contents, String armor) {
         Document document = playerCollection.find(new Document("UUID", uuid.toString())).first();
 
-
         // Call the storeInventoryToDatabase method if the UUID doesn't exists on the database
         if (document == null) {
             debug("Storing player on updateInventoryDatabase.");
@@ -59,6 +58,31 @@ public class MongoDB {
         }
 
         playerCollection.updateOne(eq("UUID", uuid.toString()),
-                combine(set("inventory.contents", contents), set("inventory.armor", armor)));
+                combine(set("inventory.contents", contents),
+                        set("inventory.armor", armor)));
+    }
+
+    public String getInventoryContentsDatabase(UUID uuid) {
+        Document document = playerCollection.find(eq("UUID", uuid.toString())).first();
+        String contents = ((Document) document.get("inventory")).getString("contents");
+
+        if (contents == null) {
+            error("Player doesn't have an inventory on the database.");
+            return null;
+        }
+
+        return contents;
+    }
+
+    public String getInventoryArmorDatabase(UUID uuid) {
+        Document document = playerCollection.find(eq("UUID", uuid.toString())).first();
+        String armor = ((Document) document.get("inventory")).getString("armor");
+
+        if (armor == null) {
+            error("Player doesn't have an inventory armor on the database.");
+            return null;
+        }
+
+        return armor;
     }
 }
