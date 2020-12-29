@@ -2,6 +2,7 @@ package club.rigox.staffcore;
 
 import club.rigox.staffcore.commands.InvCMD;
 import club.rigox.staffcore.database.MongoDB;
+import club.rigox.staffcore.listeners.PlayerListener;
 import club.rigox.staffcore.player.AttributesUtil;
 import club.rigox.staffcore.player.InventoryUtil;
 import club.rigox.staffcore.utils.Config;
@@ -35,6 +36,7 @@ public final class StaffCore extends JavaPlugin {
         loadConfiguration();
         mongo.connect();
         registerCommands();
+        new PlayerListener(this);
     }
 
     @Override
