@@ -22,6 +22,7 @@ public final class StaffCore extends JavaPlugin {
     private FileConfiguration lang;
     private FileConfiguration database;
 
+    private AttributesUtil attributesUtil;
     private Map<Player, AttributesUtil> attributesMap = new LinkedHashMap<>();
 
     @Override
@@ -69,6 +70,9 @@ public final class StaffCore extends JavaPlugin {
         return inventoryUtil;
     }
 
+    public AttributesUtil getAttributes() {
+        return attributesUtil;
+    }
     public Map<Player, AttributesUtil> getAttributesMap() {
         return attributesMap;
     }

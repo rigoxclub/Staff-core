@@ -25,6 +25,8 @@ public class InventoryUtil {
         String inventory = toBase64(player.getInventory());
         String armor = itemStackArrayToBase64(player.getInventory().getArmorContents());
         plugin.getMongo().updateInventoryDatabase(uuid, inventory, armor);
+
+        plugin.getAttributes().saveAttributes(player);
     }
 
     public void restoreInventory(Player player) throws IOException {
@@ -36,6 +38,8 @@ public class InventoryUtil {
 
         player.getInventory().setContents(contents);
         player.getInventory().setArmorContents(armor);
+
+        plugin.getAttributes().restoreAttributes(player);
     }
 
     public static String itemStackArrayToBase64(ItemStack[] items) throws IllegalStateException {
