@@ -45,6 +45,7 @@ public final class StaffCore extends JavaPlugin {
 
     public void registerCommands() {
         PaperCommandManager manager = new PaperCommandManager(this);
+        manager.enableUnstableAPI("brigadier");
         manager.registerCommand(new InvCMD(this));
     }
 
