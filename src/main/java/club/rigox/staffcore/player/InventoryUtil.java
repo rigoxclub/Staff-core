@@ -22,12 +22,23 @@ public class InventoryUtil {
         this.plugin = plugin;
     }
 
-    public void playerInventoryToBase64(Player player) throws IllegalStateException {
+    public void saveInventory(Player player) throws IllegalStateException {
         UUID uuid = player.getUniqueId();
         String inventory = toBase64(player.getInventory());
         String armor = itemStackArrayToBase64(player.getInventory().getArmorContents());
 
         plugin.getMongo().updateInventoryDatabase(uuid, inventory, armor);
+    }
+
+    public void restoreInventory(Player player) throws IOException {
+        String armorData = plugin.getMongo().getInventoryArmorDatabase(player.getUniqueId());
+        String contentsData = plugin.getMongo().getInventoryContentsDatabase(player.getUniqueId());
+
+        ItemStack[] armor = itemStackArrayFromBase64(armorData);
+        ItemStack[] contents = itemStackArrayFromBase64(contentsData);
+
+        player.getInventory().setContents(contents);
+        player.getInventory().setArmorContents(armor);
     }
 
     public static String itemStackArrayToBase64(ItemStack[] items) throws IllegalStateException {
