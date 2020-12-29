@@ -42,7 +42,7 @@ public class InventorySerializer {
 //        plugin.getAttributes().restoreAttributes(player);
     }
 
-    public static String itemStackArrayToBase64(ItemStack[] items) throws IllegalStateException {
+    public String itemStackArrayToBase64(ItemStack[] items) throws IllegalStateException {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
@@ -63,7 +63,7 @@ public class InventorySerializer {
         }
     }
 
-    public static String toBase64(Inventory inventory) throws IllegalStateException {
+    public String toBase64(Inventory inventory) throws IllegalStateException {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);

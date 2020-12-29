@@ -6,6 +6,7 @@ import club.rigox.staffcore.listeners.PlayerListener;
 import club.rigox.staffcore.player.Attributes;
 import club.rigox.staffcore.player.InventorySerializer;
 import club.rigox.staffcore.utils.Config;
+import club.rigox.staffcore.utils.PlayerUtils;
 import co.aikar.commands.PaperCommandManager;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -19,6 +20,7 @@ public final class StaffCore extends JavaPlugin {
 
     private MongoDB mongo;
     private InventorySerializer inventorySerializer;
+    private PlayerUtils playerUtils;
 
     private FileConfiguration lang;
     private FileConfiguration database;
@@ -69,6 +71,10 @@ public final class StaffCore extends JavaPlugin {
 
     public InventorySerializer getInventoryUtil() {
         return inventorySerializer;
+    }
+
+    public PlayerUtils getPlayerUtils() {
+        return playerUtils;
     }
 
     public Map<Player, Attributes> getAttributesMap() {
