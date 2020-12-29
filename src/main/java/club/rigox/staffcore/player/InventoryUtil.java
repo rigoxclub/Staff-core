@@ -24,7 +24,6 @@ public class InventoryUtil {
         UUID uuid = player.getUniqueId();
         String inventory = toBase64(player.getInventory());
         String armor = itemStackArrayToBase64(player.getInventory().getArmorContents());
-
         plugin.getMongo().updateInventoryDatabase(uuid, inventory, armor);
     }
 

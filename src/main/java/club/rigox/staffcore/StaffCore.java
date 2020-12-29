@@ -2,11 +2,16 @@ package club.rigox.staffcore;
 
 import club.rigox.staffcore.commands.InvCMD;
 import club.rigox.staffcore.database.MongoDB;
+import club.rigox.staffcore.player.AttributesUtil;
 import club.rigox.staffcore.player.InventoryUtil;
 import club.rigox.staffcore.utils.Config;
 import co.aikar.commands.PaperCommandManager;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public final class StaffCore extends JavaPlugin {
     public static StaffCore instance;
@@ -16,6 +21,8 @@ public final class StaffCore extends JavaPlugin {
 
     private FileConfiguration lang;
     private FileConfiguration database;
+
+    private Map<Player, AttributesUtil> attributesMap = new LinkedHashMap<>();
 
     @Override
     public void onEnable() {
@@ -60,5 +67,9 @@ public final class StaffCore extends JavaPlugin {
 
     public InventoryUtil getInventoryUtil() {
         return inventoryUtil;
+    }
+
+    public Map<Player, AttributesUtil> getAttributesMap() {
+        return attributesMap;
     }
 }
