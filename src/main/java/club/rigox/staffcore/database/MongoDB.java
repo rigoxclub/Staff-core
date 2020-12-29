@@ -1,17 +1,19 @@
 package club.rigox.staffcore.database;
 
-import com.mongodb.*;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 import java.util.UUID;
 
 import static club.rigox.staffcore.utils.Config.getDBString;
-import static club.rigox.staffcore.utils.Logger.*;
-import static com.mongodb.client.model.Filters.*;
-import static com.mongodb.client.model.Updates.*;
+import static club.rigox.staffcore.utils.Logger.debug;
+import static club.rigox.staffcore.utils.Logger.info;
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.combine;
+import static com.mongodb.client.model.Updates.set;
 
 public class MongoDB {
     private MongoCollection<Document> playerCollection;
@@ -36,28 +38,27 @@ public class MongoDB {
         info("MongoDB connection has been closed!");
     }
 
-    public void storeInventoryToDatabase(UUID uuid, String inventory, String armor) {
+    public void storeInventoryToDatabase(UUID uuid, String contents, String armor) {
         Document document = new Document("UUID", uuid.toString())
-                .append("inventory", new Document("contents", inventory)
+                .append("inventory", new Document("contents", contents)
                         .append("armor", armor));
 
         playerCollection.insertOne(document);
-
     }
 
 
-    public void updateInventoryDatabase(UUID uuid, String inventory, String armor) {
-//        DBObject r = new BasicDBObject("UUID", uuid.toString());
-//        DBObject found = playerCollection.findOne(r);
-//
-//        if (found == null) {
-//            debug("Player has been added to the database while being checked.");
-//            storeInventoryToDatabase(uuid, inventory, armor);
-//            return;
-//        }
-//
+    public void updateInventoryDatabase(UUID uuid, String contents, String armor) {
+        Document document = playerCollection.find(new Document("UUID", uuid.toString())).first();
 
-        playerCollection.updateOne(eq("UUID", new ObjectId(uuid.toString())),
-                combine(set("inventory.contents", "vamoo"), set("inventory.armor", "vamooo")));
+
+        // Call the storeInventoryToDatabase method if the UUID doesn't exists on the database
+        if (document == null) {
+            debug("Storing player on updateInventoryDatabase.");
+            storeInventoryToDatabase(uuid, contents, armor);
+            return;
+        }
+
+        playerCollection.updateOne(eq("UUID", uuid.toString()),
+                combine(set("inventory.contents", contents), set("inventory.armor", armor)));
     }
 }
