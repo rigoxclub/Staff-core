@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerListener implements Listener {
-    private StaffCore plugin;
+    private final StaffCore plugin;
 
     public PlayerListener (StaffCore plugin) {
         this.plugin = plugin;
@@ -19,6 +19,6 @@ public class PlayerListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
 
-        plugin.getAttributesMap().put(player, new Attributes(plugin));
+        plugin.getAttributesMap().put(player, new Attributes());
     }
 }

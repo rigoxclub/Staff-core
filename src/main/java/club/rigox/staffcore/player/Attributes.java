@@ -43,6 +43,12 @@ public class Attributes {
      * @return player's food level.
      */
     public int getFood() {
+        // If player's health is 0.4
+        // set max health. Instead of
+        // automatically kill the player.
+        if (food <= 0) {
+            return 20;
+        }
         return food;
     }
 
