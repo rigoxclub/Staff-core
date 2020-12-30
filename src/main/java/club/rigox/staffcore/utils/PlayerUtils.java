@@ -25,7 +25,7 @@ public class PlayerUtils {
 
         double playerHealth = player.getHealth();
         int playerFood = player.getFoodLevel();
-        float playerExp = player.getExp();
+        int playerExp = (int) player.getExp();
         int playerExpLevel = player.getLevel();
 
         attributes.setHealth(playerHealth);
@@ -42,7 +42,7 @@ public class PlayerUtils {
 
         double health = attributes.getHealth();
         int food = attributes.getFood();
-        float exp = attributes.getExperience();
+        int exp = attributes.getExperience();
         int expLevel = attributes.getExperienceLevel();
 
         plugin.getMongo().updateAttributesToDatabase(player.getUniqueId(), health, food, exp, expLevel);
@@ -56,12 +56,12 @@ public class PlayerUtils {
 
         double health = mongo.getDoubleAttribute(player.getUniqueId(), "health");
         int food = mongo.getIntAttribute(player.getUniqueId(), "food");
-//      TODO  float exp = (float) mongo.getIntAttributesFromDatabase(player.getUniqueId(), "exp");
+        int exp = mongo.getIntAttribute(player.getUniqueId(), "exp");
         int expLevel = mongo.getIntAttribute(player.getUniqueId(), "expLevel");
 
         attributes.setHealth(health);
         attributes.setFood(food);
-//      TODO  attributes.setExperience(exp);
+        attributes.setExperience(exp);
 
         attributes.setExperienceLevel(expLevel);
     }

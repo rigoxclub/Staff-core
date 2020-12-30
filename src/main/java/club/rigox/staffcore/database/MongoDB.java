@@ -68,7 +68,7 @@ public class MongoDB {
         return ((Document) document.get("inventory")).getString(type);
     }
 
-    public void updateAttributesToDatabase(UUID uuid, double health, int food, float exp, int expLevel) {
+    public void updateAttributesToDatabase(UUID uuid, double health, int food, int exp, int expLevel) {
         Document document = playerCollection.find(new Document("UUID", uuid.toString())).first();
 
         // Call the storeInventoryToDatabase method if the UUID doesn't exists on the database

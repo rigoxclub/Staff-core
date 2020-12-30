@@ -12,8 +12,7 @@ public class Attributes {
 
     private double health;
 
-    private float experience;
-
+    private int experience;
     private int experienceLevel;
     private int food;
 
@@ -70,14 +69,14 @@ public class Attributes {
     /**
      * @param value set the player's experience float.
      */
-    public void setExperience(float value) {
+    public void setExperience(int value) {
         this.experience = value;
     }
 
     /**
      * @return player's experience float.
      */
-    public float getExperience() {
+    public int getExperience() {
         return experience;
     }
 
