@@ -59,14 +59,13 @@ public class MongoDB {
 
     public String getInventoryDatabase(UUID uuid, String type) {
         Document document = playerCollection.find(eq("UUID", uuid.toString())).first();
-        String inventory = ((Document) document.get("inventory")).getString(type);
 
-        if (inventory == null) {
-            error("Player doesn't have an inventory on the database.");
+        if (document == null) {
+            debug("Storing player on getInventoryDatabase.");
             return null;
         }
 
-        return inventory;
+        return ((Document) document.get("inventory")).getString(type);
     }
 
     public void updateAttributesToDatabase(UUID uuid, double health, int food, float exp, int expLevel) {
@@ -85,16 +84,6 @@ public class MongoDB {
                         set("attributes.expLevel", expLevel)));
     }
 
-    public Integer getIntAttributesFromDatabase(UUID uuid, String value) {
-        Document document = playerCollection.find(eq("UUID", uuid.toString())).first();
-        return ((Document) document.get("attributes")).getInteger(value);
-    }
-
-    public Double getDoubleAttributesFromDatabase(UUID uuid, String value) {
-        Document document = playerCollection.find(eq("UUID", uuid.toString())).first();
-        return ((Document) document.get("attributes")).getDouble(value);
-    }
-
     public void updateStaffToDatabase(UUID uuid, boolean staff) {
         Document document = playerCollection.find(new Document("UUID", uuid.toString())).first();
 
@@ -110,13 +99,37 @@ public class MongoDB {
 
     public Boolean quitOnStaff(UUID uuid) {
         Document document = playerCollection.find(eq("UUID", uuid.toString())).first();
-        Boolean staff = ((Document) document.get("staff")).getBoolean("quitOnStaff");
 
-        if (staff == null) {
-            error("Player doesn't have staff boolean on the database.");
+        if (document == null) {
+            debug("Storing player on quitOnStaff.");
+            storePlayerToDatabase(uuid);
             return false;
         }
 
-        return staff;
+        return ((Document) document.get("staff")).getBoolean("quitOnStaff");
+    }
+
+    public Integer getIntAttribute(UUID uuid, String value) {
+        Document document = playerCollection.find(eq("UUID", uuid.toString())).first();
+
+        if (document == null) {
+            debug("Storing player on getIntAttribute.");
+            storePlayerToDatabase(uuid);
+            return 0;
+        }
+
+        return ((Document) document.get("attributes")).getInteger(value);
+    }
+
+    public Double getDoubleAttribute(UUID uuid, String value) {
+        Document document = playerCollection.find(eq("UUID", uuid.toString())).first();
+
+        if (document == null) {
+            debug("Storing player on getDoubleAttribute.");
+            storePlayerToDatabase(uuid);
+            return 0.0;
+        }
+
+        return ((Document) document.get("attributes")).getDouble(value);
     }
 }

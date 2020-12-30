@@ -54,10 +54,10 @@ public class PlayerUtils {
 
         restoreInventory(player);
 
-        double health = mongo.getDoubleAttributesFromDatabase(player.getUniqueId(), "health");
-        int food = mongo.getIntAttributesFromDatabase(player.getUniqueId(), "food");
+        double health = mongo.getDoubleAttribute(player.getUniqueId(), "health");
+        int food = mongo.getIntAttribute(player.getUniqueId(), "food");
 //      TODO  float exp = (float) mongo.getIntAttributesFromDatabase(player.getUniqueId(), "exp");
-        int expLevel = mongo.getIntAttributesFromDatabase(player.getUniqueId(), "expLevel");
+        int expLevel = mongo.getIntAttribute(player.getUniqueId(), "expLevel");
 
         attributes.setHealth(health);
         attributes.setFood(food);
