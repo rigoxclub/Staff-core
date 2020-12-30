@@ -33,7 +33,7 @@ public final class StaffCore extends JavaPlugin {
 
         mongo = new MongoDB();
         playerUtils = new PlayerUtils(this);
-        inventorySerializer = new InventorySerializer(this);
+        inventorySerializer = new InventorySerializer();
 
         loadConfiguration();
         registerCommands();

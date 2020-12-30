@@ -23,8 +23,6 @@ public class InvCMD extends BaseCommand {
     @CommandCompletion("@players")
     @Syntax("<player>")
     public void onSave(CommandSender sender, Player player) {
-//        plugin.getInventoryUtil().saveInventory(player);
-        player.getInventory().clear();
         plugin.getPlayerUtils().saveAttributes(player);
     }
 
@@ -32,7 +30,6 @@ public class InvCMD extends BaseCommand {
     @CommandCompletion("@players")
     @Syntax("<player>")
     public void onRestore(CommandSender sender, Player player) throws IOException {
-//        plugin.getInventoryUtil().restoreInventory(player);
         plugin.getPlayerUtils().restoreAttributes(player);
     }
 }
