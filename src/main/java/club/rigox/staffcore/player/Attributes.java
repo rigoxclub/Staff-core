@@ -4,18 +4,12 @@ import club.rigox.staffcore.StaffCore;
 import org.bukkit.entity.Player;
 
 public class Attributes {
-    private final StaffCore plugin;
-
     private double health;
 
     private float experience;
 
     private int experienceLevel;
     private int food;
-
-    public Attributes(StaffCore plugin) {
-        this.plugin = plugin;
-    }
 
     /**
      * @param value set the player's health value.
@@ -28,6 +22,13 @@ public class Attributes {
      * @return player's heart.
      */
     public double getHealth() {
+        // If player's health is 0.4
+        // set max health. Instead of
+        // automatically kill the player.
+        if (health <= 0.4) {
+            return 20.0;
+        }
+
         return health;
     }
 
