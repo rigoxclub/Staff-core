@@ -37,11 +37,8 @@ public class MongoDB {
         info("MongoDB connection has been closed!");
     }
 
-    public void storeInventoryToDatabase(UUID uuid, String contents, String armor) {
-        Document document = new Document("UUID", uuid.toString())
-                .append("inventory", new Document("contents", contents)
-                        .append("armor", armor));
-
+    public void storePlayerToDatabase(UUID uuid) {
+        Document document = new Document("UUID", uuid.toString());
         playerCollection.insertOne(document);
     }
 
@@ -52,8 +49,7 @@ public class MongoDB {
         // Call the storeInventoryToDatabase method if the UUID doesn't exists on the database
         if (document == null) {
             debug("Storing player on updateInventoryDatabase.");
-            storeInventoryToDatabase(uuid, contents, armor);
-            return;
+            storePlayerToDatabase(uuid);
         }
 
         playerCollection.updateOne(eq("UUID", uuid.toString()),
@@ -83,5 +79,46 @@ public class MongoDB {
         }
 
         return armor;
+    }
+
+    public void updateAttributesToDatabase(UUID uuid, double health, int food, float exp, int expLevel) {
+        Document document = playerCollection.find(new Document("UUID", uuid.toString())).first();
+
+        // Call the storeInventoryToDatabase method if the UUID doesn't exists on the database
+        if (document == null) {
+            debug("Storing player on updateAttributesToDatabase.");
+            storePlayerToDatabase(uuid);
+        }
+
+        playerCollection.updateOne(eq("UUID", uuid.toString()),
+                combine(set("attributes.health", health),
+                        set("attributes.food", food),
+                        set("attributes.exp", exp),
+                        set("attributes.expLevel", expLevel)));
+    }
+
+    public void updateStaffToDatabase(UUID uuid, boolean staff) {
+        Document document = playerCollection.find(new Document("UUID", uuid.toString())).first();
+
+        // Call the storeInventoryToDatabase method if the UUID doesn't exists on the database
+        if (document == null) {
+            debug("Player doesn't exists on the collection!");
+            return;
+        }
+
+        playerCollection.updateOne(eq("UUID", uuid.toString()),
+                        set("staff.quitOnStaff", staff));
+    }
+
+    public Boolean quitOnStaff(UUID uuid) {
+        Document document = playerCollection.find(eq("UUID", uuid.toString())).first();
+        Boolean staff = ((Document) document.get("staff")).getBoolean("quitOnStaff");
+
+        if (staff == null) {
+            error("Player doesn't have staff boolean on the database.");
+            return false;
+        }
+
+        return staff;
     }
 }

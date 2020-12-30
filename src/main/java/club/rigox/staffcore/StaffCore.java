@@ -1,6 +1,7 @@
 package club.rigox.staffcore;
 
 import club.rigox.staffcore.commands.InvCMD;
+import club.rigox.staffcore.commands.StaffCMD;
 import club.rigox.staffcore.database.MongoDB;
 import club.rigox.staffcore.listeners.PlayerListener;
 import club.rigox.staffcore.player.Attributes;
@@ -57,6 +58,7 @@ public final class StaffCore extends JavaPlugin {
         PaperCommandManager manager = new PaperCommandManager(this);
         manager.enableUnstableAPI("brigadier");
         manager.registerCommand(new InvCMD(this));
+        manager.registerCommand(new StaffCMD(this));
     }
 
     public void registerListeners() {

@@ -1,12 +1,30 @@
 package club.rigox.staffcore.player;
 
+import club.rigox.staffcore.StaffCore;
+import org.bukkit.entity.Player;
+
+import java.io.IOException;
+
+import static club.rigox.staffcore.utils.Logger.sendMessage;
+
 public class Attributes {
+    private final StaffCore plugin;
+
     private double health;
 
     private float experience;
 
     private int experienceLevel;
     private int food;
+
+    private boolean staffMode;
+
+    private String inventory;
+    private String armor;
+
+    public Attributes (StaffCore plugin) {
+        this.plugin = plugin;
+    }
 
     /**
      * @param value set the player's health value.
@@ -76,5 +94,34 @@ public class Attributes {
      */
     public int getExperienceLevel() {
         return experienceLevel;
+    }
+
+    /**
+     * @param value true / false
+     * @param player to perform the action.
+     * @throws IOException exception
+     */
+    public void setStaffMode(boolean value, Player player) throws IOException {
+        if (!value) {
+            this.staffMode = false;
+
+            plugin.getPlayerUtils().restoreAttributes(player);
+            plugin.getMongo().updateStaffToDatabase(player.getUniqueId(), false);
+            sendMessage(player, "&8&l* &fStaff mode has been &cdisabled&f!");
+            return;
+        }
+        this.staffMode = true;
+
+        plugin.getPlayerUtils().saveAttributes(player);
+        plugin.getMongo().updateStaffToDatabase(player.getUniqueId(), true);
+        sendMessage(player, "&8&l* &fStaff mode has been &aenabled&f!");
+    }
+
+    /**
+     * Getter
+     * @return player staff mode
+     */
+    public boolean isOnStaffMode() {
+        return staffMode;
     }
 }

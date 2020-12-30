@@ -36,6 +36,19 @@ public class PlayerUtils {
         setDefaultAttributes(player);
     }
 
+    public void saveAttributesToDatabase(Player player) {
+        Attributes attributes = plugin.getAttributesMap().get(player);
+
+        double health = attributes.getHealth();
+        int food = attributes.getFood();
+        float exp = attributes.getExperience();
+        int expLevel = attributes.getExperienceLevel();
+
+        boolean staff = attributes.isOnStaffMode();
+
+        plugin.getMongo().updateAttributesToDatabase(player.getUniqueId(), health, food, exp, expLevel);
+    }
+
     /**
      * @param player restore attributes to specified player.
      */
