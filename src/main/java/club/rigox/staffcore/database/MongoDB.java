@@ -57,28 +57,16 @@ public class MongoDB {
                         set("inventory.armor", armor)));
     }
 
-    public String getInventoryContentsDatabase(UUID uuid) {
+    public String getInventoryDatabase(UUID uuid, String type) {
         Document document = playerCollection.find(eq("UUID", uuid.toString())).first();
-        String contents = ((Document) document.get("inventory")).getString("contents");
+        String inventory = ((Document) document.get("inventory")).getString(type);
 
-        if (contents == null) {
+        if (inventory == null) {
             error("Player doesn't have an inventory on the database.");
             return null;
         }
 
-        return contents;
-    }
-
-    public String getInventoryArmorDatabase(UUID uuid) {
-        Document document = playerCollection.find(eq("UUID", uuid.toString())).first();
-        String armor = ((Document) document.get("inventory")).getString("armor");
-
-        if (armor == null) {
-            error("Player doesn't have an inventory armor on the database.");
-            return null;
-        }
-
-        return armor;
+        return inventory;
     }
 
     public void updateAttributesToDatabase(UUID uuid, double health, int food, float exp, int expLevel) {

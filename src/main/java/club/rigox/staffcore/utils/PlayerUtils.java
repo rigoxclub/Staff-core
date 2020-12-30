@@ -127,8 +127,8 @@ public class PlayerUtils {
     public void restoreInventory(Player player) throws IOException {
         InventorySerializer serializer = plugin.getInventoryUtil();
 
-        String armorData = plugin.getMongo().getInventoryArmorDatabase(player.getUniqueId());
-        String contentsData = plugin.getMongo().getInventoryContentsDatabase(player.getUniqueId());
+        String armorData = plugin.getMongo().getInventoryDatabase(player.getUniqueId(), "armor");
+        String contentsData = plugin.getMongo().getInventoryDatabase(player.getUniqueId(), "contents");
 
         ItemStack[] armor = serializer.itemStackArrayFromBase64(armorData);
         ItemStack[] contents = serializer.itemStackArrayFromBase64(contentsData);
