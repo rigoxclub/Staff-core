@@ -1,6 +1,5 @@
 package club.rigox.staffcore.player;
 
-import club.rigox.staffcore.StaffCore;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;

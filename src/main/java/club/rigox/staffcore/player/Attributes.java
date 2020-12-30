@@ -1,8 +1,5 @@
 package club.rigox.staffcore.player;
 
-import club.rigox.staffcore.StaffCore;
-import org.bukkit.entity.Player;
-
 public class Attributes {
     private double health;
 
