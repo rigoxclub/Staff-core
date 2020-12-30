@@ -97,6 +97,16 @@ public class MongoDB {
                         set("attributes.expLevel", expLevel)));
     }
 
+    public Integer getIntAttributesFromDatabase(UUID uuid, String value) {
+        Document document = playerCollection.find(eq("UUID", uuid.toString())).first();
+        return ((Document) document.get("attributes")).getInteger(value);
+    }
+
+    public Double getDoubleAttributesFromDatabase(UUID uuid, String value) {
+        Document document = playerCollection.find(eq("UUID", uuid.toString())).first();
+        return ((Document) document.get("attributes")).getDouble(value);
+    }
+
     public void updateStaffToDatabase(UUID uuid, boolean staff) {
         Document document = playerCollection.find(new Document("UUID", uuid.toString())).first();
 

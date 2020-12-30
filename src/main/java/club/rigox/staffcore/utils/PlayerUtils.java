@@ -1,6 +1,7 @@
 package club.rigox.staffcore.utils;
 
 import club.rigox.staffcore.StaffCore;
+import club.rigox.staffcore.database.MongoDB;
 import club.rigox.staffcore.player.Attributes;
 import club.rigox.staffcore.player.InventorySerializer;
 import org.bukkit.entity.Player;
@@ -44,9 +45,25 @@ public class PlayerUtils {
         float exp = attributes.getExperience();
         int expLevel = attributes.getExperienceLevel();
 
-        boolean staff = attributes.isOnStaffMode();
-
         plugin.getMongo().updateAttributesToDatabase(player.getUniqueId(), health, food, exp, expLevel);
+    }
+
+    public void restoreSessionFromQuit(Player player) throws IOException {
+        MongoDB mongo = plugin.getMongo();
+        Attributes attributes = plugin.getAttributesMap().get(player);
+
+        restoreInventory(player);
+
+        double health = mongo.getDoubleAttributesFromDatabase(player.getUniqueId(), "health");
+        int food = mongo.getIntAttributesFromDatabase(player.getUniqueId(), "food");
+//      TODO  float exp = (float) mongo.getIntAttributesFromDatabase(player.getUniqueId(), "exp");
+        int expLevel = mongo.getIntAttributesFromDatabase(player.getUniqueId(), "expLevel");
+
+        attributes.setHealth(health);
+        attributes.setFood(food);
+//      TODO  attributes.setExperience(exp);
+
+        attributes.setExperienceLevel(expLevel);
     }
 
     /**

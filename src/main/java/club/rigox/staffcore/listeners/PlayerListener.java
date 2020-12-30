@@ -1,12 +1,15 @@
 package club.rigox.staffcore.listeners;
 
 import club.rigox.staffcore.StaffCore;
+import club.rigox.staffcore.database.MongoDB;
 import club.rigox.staffcore.player.Attributes;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+
+import java.io.IOException;
 
 import static club.rigox.staffcore.utils.Logger.debug;
 
@@ -19,14 +22,16 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent e) {
+    public void onPlayerJoin(PlayerJoinEvent e) throws IOException {
         Player player = e.getPlayer();
-
-        if (plugin.getMongo().quitOnStaff(player.getUniqueId())) {
-            debug("Player has quit on staff mode");
-        }
+        MongoDB mongo = plugin.getMongo();
 
         plugin.getAttributesMap().put(player, new Attributes(plugin));
+
+        if (mongo.quitOnStaff(player.getUniqueId())) {
+            plugin.getPlayerUtils().restoreSessionFromQuit(player);
+            plugin.getAttributesMap().get(player).setStaffMode(true, player);
+        }
     }
 
     @EventHandler
